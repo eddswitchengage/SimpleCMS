@@ -11,8 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3914843D-BFC9-4B42-AFAD-A24667318E62}"
 	ProjectSection(SolutionItems) = preProject
+		Changelog.md = Changelog.md
 		Readme.md = Readme.md
+		Todo.txt = Todo.txt
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EditorClient", "EditorClient\EditorClient.csproj", "{F3293593-13FB-4172-8200-17924AA4D68A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +36,10 @@ Global
 		{377B82B1-FABE-437A-A93B-DA811AC65F68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{377B82B1-FABE-437A-A93B-DA811AC65F68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{377B82B1-FABE-437A-A93B-DA811AC65F68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3293593-13FB-4172-8200-17924AA4D68A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3293593-13FB-4172-8200-17924AA4D68A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3293593-13FB-4172-8200-17924AA4D68A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3293593-13FB-4172-8200-17924AA4D68A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
