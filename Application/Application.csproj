@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>SimpleCMS.Application</AssemblyName>
+    <RootNamespace>SimpleCMS.Application</RootNamespace>
+  </PropertyGroup>
+
+</Project>
