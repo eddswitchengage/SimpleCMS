@@ -9,6 +9,8 @@ namespace SimpleCMS.Domain.Entities
     {
         public int ContentId { get; set; }
 
+        public int TopicId { get; set; }
+
         public string Name { get; set; }
         public string Description { get; set; }
     }
