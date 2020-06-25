@@ -53,8 +53,10 @@ namespace EditorClient
             app.Map("", builder => builder.Run(async context =>
             {
                 var sb = new StringBuilder();
+                sb.Append("<div style='text-align:center;'>");
                 sb.Append("<h1>SimpleCMS</h1>");
                 sb.Append("<h3>Welcome to SimpleCMS");
+                sb.Append("</div>");
                 await context.Response.WriteAsync(sb.ToString());
             }));
         }

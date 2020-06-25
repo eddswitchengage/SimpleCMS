@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SimpleCMS.Application.Categories.Commands.DeleteCategory;
 using SimpleCMS.Application.Categories.Commands.UpsertCategory;
 using SimpleCMS.Application.Categories.Queries.GetCategoriesList;
+using SimpleCMS.Application.Categories.Queries.GetCategoryDetail;
 using System.Threading.Tasks;
 
 namespace SimpleCMS.EditorClient.Controllers
@@ -10,9 +11,15 @@ namespace SimpleCMS.EditorClient.Controllers
     public class CategoriesController : BaseController
     {
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAll()
         {
             return Ok(await Mediator.Send(new GetCategoriesListQuery()));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            return Ok(await Mediator.Send(new GetCategoryDetailQuery() { Id = id }));
         }
 
         [HttpPost]
