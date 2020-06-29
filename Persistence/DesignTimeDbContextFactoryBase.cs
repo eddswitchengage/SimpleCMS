@@ -9,7 +9,7 @@ namespace SimpleCMS.Persistence
     public abstract class DesignTimeDbContextFactoryBase<TContext> : IDesignTimeDbContextFactory<TContext> where TContext : DbContext
     {
         private const string CONNECTIONSTRINGNAME = "SimpleDatabase";
-        private const string STARTUPPROJECTDIRECTORY = "EditorClient";
+        private const string STARTUPPROJECTDIRECTORY = "API";
 
         public TContext CreateDbContext(string[] args)
         {

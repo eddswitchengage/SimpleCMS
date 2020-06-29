@@ -6,7 +6,7 @@ using SimpleCMS.Application.Categories.Queries.GetCategoriesList;
 using SimpleCMS.Application.Categories.Queries.GetCategoryDetail;
 using System.Threading.Tasks;
 
-namespace SimpleCMS.EditorClient.Controllers
+namespace SimpleCMS.API.Controllers
 {
     public class CategoriesController : BaseController
     {

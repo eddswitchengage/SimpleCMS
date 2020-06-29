@@ -7,7 +7,7 @@ using SimpleCMS.Application.Contents.Commands.UpsertContent;
 using Microsoft.AspNetCore.Http;
 using SimpleCMS.Application.Contents.Commands.DeleteContent;
 
-namespace SimpleCMS.EditorClient.Controllers
+namespace SimpleCMS.API.Controllers
 {
     public class ContentsController : BaseController
     {

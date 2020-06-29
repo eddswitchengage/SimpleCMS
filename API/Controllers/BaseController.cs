@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace SimpleCMS.EditorClient.Controllers
+namespace SimpleCMS.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]

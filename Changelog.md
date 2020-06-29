@@ -2,6 +2,19 @@
 SimpleCMS Changelog
 =========
 
+Version 0.3
+---
+**2020/05/29**
+
+Added:
+ - Custom exceptions for validation errors, bad requests and deletion failures
+ - Custom exception handler middleware
+ - Application.UnitTests xUnit project
+ - Wrote tests for Category, Contents and Topics commands & queries
+ - Implemented NSwag open API documentation
+
+Changed:
+ - Renamed EditorClient to API
 
 <br />
 

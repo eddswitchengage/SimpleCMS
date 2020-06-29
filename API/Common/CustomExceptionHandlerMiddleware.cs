@@ -8,7 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimpleCMS.EditorClient.Common
+namespace SimpleCMS.API.Common
 {
     public class CustomExceptionHandlerMiddleware
     {

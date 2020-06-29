@@ -6,7 +6,7 @@ using SimpleCMS.Application.Topics.Queries.GetTopicDetail;
 using SimpleCMS.Application.Topics.Queries.GetTopicsList;
 using System.Threading.Tasks;
 
-namespace SimpleCMS.EditorClient.Controllers
+namespace SimpleCMS.API.Controllers
 {
     public class TopicsController : BaseController
     {
