@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace SimpleCMS.Application.Categories.Queries.GetCategoryDetail
 {
-    public class GetCategoryDetailHandler : IRequestHandler<GetCategoryDetailQuery, CategoryDetailVM>
+    public class GetCategoryDetailQueryHandler : IRequestHandler<GetCategoryDetailQuery, CategoryDetailVM>
     {
         private readonly ISimpleDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetCategoryDetailHandler(ISimpleDbContext context, IMapper mapper)
+        public GetCategoryDetailQueryHandler(ISimpleDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

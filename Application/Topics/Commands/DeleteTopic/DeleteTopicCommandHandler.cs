@@ -24,7 +24,15 @@ namespace SimpleCMS.Application.Topics.Commands.DeleteTopic
         {
             Topic topic = await _context.Topics.FindAsync(request.Id);
 
-            if (topic == null) throw new EntityNotFoundException(nameof(Topic), request.Id);
+            if (topic == null) throw new NotFoundException(nameof(Topic), request.Id);
+
+
+            var hasContents = _context.Contents.Any(t => t.TopicId == topic.TopicId);
+            if (hasContents)
+            {
+                throw new DeleteFailureException(nameof(topic), request.Id,
+                    "This topic cannot be deleted as it isn't empty.");
+            }
 
             _context.Topics.Remove(topic);
 

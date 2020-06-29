@@ -24,7 +24,7 @@ namespace SimpleCMS.Application.Categories.Commands.UpsertCategory
             {
                 category = await _context.Categories.FindAsync(request.Id.Value);
 
-                if (category == null) throw new EntityNotFoundException(nameof(Category), request.Id);
+                if (category == null) throw new NotFoundException(nameof(Category), request.Id);
             }
             else
             {

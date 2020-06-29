@@ -21,7 +21,7 @@ namespace SimpleCMS.Application.Contents.Commands.DeleteContent
             Content content = await _context.Contents.FindAsync(request.Id);
 
             if (content == null)
-                throw new EntityNotFoundException(nameof(content), request.Id);
+                throw new NotFoundException(nameof(content), request.Id);
 
             _context.Contents.Remove(content);
 

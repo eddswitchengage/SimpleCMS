@@ -49,7 +49,7 @@ namespace SimpleCMS.EditorClient.Common
                     result = badRequestException.Message;
                     break;
 
-                case EntityNotFoundException notFoundException:
+                case NotFoundException notFoundException:
                     code = HttpStatusCode.NotFound;
                     break;
             }

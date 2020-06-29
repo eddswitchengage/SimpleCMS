@@ -23,7 +23,7 @@ namespace SimpleCMS.Application.Topics.Commands.UpsertTopic
         {
             if ((await _context.Categories.FindAsync(request.CategoryId)) == null)
             {
-                throw new EntityNotFoundException(nameof(Category), request.CategoryId);
+                throw new BadRequestException($"{nameof(request.CategoryId)} {request.CategoryId} is invalid.");
             }
 
             Topic topic;
@@ -32,7 +32,7 @@ namespace SimpleCMS.Application.Topics.Commands.UpsertTopic
             {
                 topic = await _context.Topics.FindAsync(request.Id.Value);
 
-                if (topic == null) throw new EntityNotFoundException(nameof(Topic), request.Id);
+                if (topic == null) throw new NotFoundException(nameof(Topic), request.Id);
             }
             else
             {

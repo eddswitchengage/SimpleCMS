@@ -1,9 +1,11 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore.Internal;
 using SimpleCMS.Application.Common.Exceptions;
 using SimpleCMS.Application.Common.Interfaces;
 using SimpleCMS.Domain.Entities;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace SimpleCMS.Application.Categories.Commands.DeleteCategory
 {
@@ -20,7 +22,14 @@ namespace SimpleCMS.Application.Categories.Commands.DeleteCategory
         {
             Category category = await _context.Categories.FindAsync(request.Id);
 
-            if (category == null) throw new EntityNotFoundException(nameof(Category), request.Id);
+            if (category == null) throw new NotFoundException(nameof(Category), request.Id);
+
+            var hasTopics = _context.Topics.Any(t => t.CategoryId == category.CategoryId);
+            if (hasTopics)
+            {
+                throw new DeleteFailureException(nameof(category), request.Id,
+                    "This category cannot be deleted as it isn't empty.");
+            }
 
             _context.Categories.Remove(category);
 

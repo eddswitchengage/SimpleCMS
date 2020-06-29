@@ -1,10 +1,7 @@
 ﻿using MediatR;
+using SimpleCMS.Application.Common.Exceptions;
 using SimpleCMS.Application.Common.Interfaces;
 using SimpleCMS.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,11 +18,18 @@ namespace SimpleCMS.Application.Contents.Commands.UpsertContent
 
         public async Task<int> Handle(UpsertContentCommand request, CancellationToken cancellationToken)
         {
+            if ((await _context.Topics.FindAsync(request.TopicId)) == null)
+            {
+                throw new BadRequestException($"{nameof(request.TopicId)} {request.TopicId} is invalid.");
+            }
+
             Content content;
 
             if (request.Id.HasValue)
             {
                 content = await _context.Contents.FindAsync(request.Id.Value);
+
+                if (content == null) throw new NotFoundException(nameof(Content), request.Id);
             }
             else
             {
