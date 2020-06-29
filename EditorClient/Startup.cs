@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SimpleCMS.Application;
 using SimpleCMS.Application.Common.Interfaces;
+using SimpleCMS.EditorClient.Common;
 using SimpleCMS.Persistence;
 using System.Text;
 
@@ -38,6 +39,8 @@ namespace EditorClient
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseMiddleware<CustomExceptionHandlerMiddleware>();
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
@@ -46,6 +49,7 @@ namespace EditorClient
             });
 
             MapWelcomePage(app);
+            
         }
 
         private void MapWelcomePage(IApplicationBuilder app)
