@@ -31,7 +31,7 @@ namespace SimpleCMS.Application.Topics.Commands.DeleteTopic
             if (hasContents)
             {
                 throw new DeleteFailureException(nameof(topic), request.Id,
-                    "This topic cannot be deleted as it isn't empty.");
+                    "Topic not empty.");
             }
 
             _context.Topics.Remove(topic);

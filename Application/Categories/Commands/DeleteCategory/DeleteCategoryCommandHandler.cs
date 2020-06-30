@@ -28,7 +28,7 @@ namespace SimpleCMS.Application.Categories.Commands.DeleteCategory
             if (hasTopics)
             {
                 throw new DeleteFailureException(nameof(category), request.Id,
-                    "This category cannot be deleted as it isn't empty.");
+                    "Category not empty.");
             }
 
             _context.Categories.Remove(category);
