@@ -9,15 +9,6 @@ You can check out the changelog [here](https://github.com/eddswitchengage/Simple
 
 <br />
 
-### Objectives
-- Create a foundation on which a fleshed-out CMS can be built with minimal effort.
-- Implement secure authorisation/authentication
-- Build a configurable web-client that is robust and easy to use.
-- Learn as much as possible
-
-<br />
-
-
 ### Structure
 The project structure follows a clean architecture approach and aims to separate/decouple wherever possible. You can find out more about clean architecture from Jason Taylor [here](https://www.youtube.com/watch?v=_lwCVE_XgqI).
 
