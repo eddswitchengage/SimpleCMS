@@ -8,8 +8,8 @@ namespace SimpleCMS.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Content> builder)
         {
-            builder.Property(e => e.Name)
-                .HasMaxLength(24);
+            builder.Property(e => e.Title)
+                .HasMaxLength(128);
         }
     }
 }

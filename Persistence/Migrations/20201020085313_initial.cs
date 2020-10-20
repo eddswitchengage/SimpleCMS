@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SimpleCMS.Persistence.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,7 @@ namespace SimpleCMS.Persistence.Migrations
                 {
                     CategoryId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 14, nullable: false),
+                    Title = table.Column<string>(maxLength: 32, nullable: false),
                     Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -28,7 +28,7 @@ namespace SimpleCMS.Persistence.Migrations
                     TopicId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CategoryId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(maxLength: 14, nullable: true),
+                    Title = table.Column<string>(maxLength: 64, nullable: true),
                     Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -53,8 +53,9 @@ namespace SimpleCMS.Persistence.Migrations
                     LastModifiedBy = table.Column<string>(nullable: true),
                     LastModified = table.Column<DateTime>(nullable: true),
                     TopicId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(maxLength: 24, nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    Title = table.Column<string>(maxLength: 128, nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    HTMLBody = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

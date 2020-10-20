@@ -6,7 +6,7 @@ namespace SimpleCMS.Application.Categories.Commands.UpsertCategory
     {
         public UpsertCategoryCommandValidator()
         {
-            RuleFor(v => v.Name).NotEmpty().MaximumLength(24);
+            RuleFor(v => v.Title).NotEmpty().MaximumLength(24);
         }
     }
 }

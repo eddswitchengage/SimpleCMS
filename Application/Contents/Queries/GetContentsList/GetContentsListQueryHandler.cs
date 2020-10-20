@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SimpleCMS.Application.Common.Interfaces;
+using SimpleCMS.Application.Contents.Queries.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,7 +23,7 @@ namespace SimpleCMS.Application.Contents.Queries.GetContentsList
         public async Task<ContentsListVM> Handle(GetContentsListQuery request, CancellationToken cancellationToken)
         {
             var contents = await _context.Contents.
-                ProjectTo<ContentDTO>(_mapper.ConfigurationProvider).
+                ProjectTo<ContentDetailVM>(_mapper.ConfigurationProvider).
                 ToListAsync(cancellationToken);
 
             var viewModel = new ContentsListVM()

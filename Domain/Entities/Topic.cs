@@ -15,7 +15,7 @@ namespace SimpleCMS.Domain.Entities
 
         public int CategoryId { get; set; }
 
-        public string Name { get; set; }
+        public string Title { get; set; }
         public string Description { get; set; }
 
         public ICollection<Content> Contents { get; private set; }

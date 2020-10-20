@@ -10,8 +10,8 @@ using SimpleCMS.Persistence;
 namespace SimpleCMS.Persistence.Migrations
 {
     [DbContext(typeof(SimpleDbContext))]
-    [Migration("20200624144636_Initial")]
-    partial class Initial
+    [Migration("20201020085313_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,10 +31,10 @@ namespace SimpleCMS.Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(14)")
-                        .HasMaxLength(14);
+                        .HasColumnType("nvarchar(32)")
+                        .HasMaxLength(32);
 
                     b.HasKey("CategoryId");
 
@@ -57,15 +57,18 @@ namespace SimpleCMS.Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("HTMLBody")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(24)")
-                        .HasMaxLength(24);
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<int>("TopicId")
                         .HasColumnType("int");
@@ -90,9 +93,9 @@ namespace SimpleCMS.Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(14)")
-                        .HasMaxLength(14);
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(64)")
+                        .HasMaxLength(64);
 
                     b.HasKey("TopicId");
 

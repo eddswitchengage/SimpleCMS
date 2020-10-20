@@ -29,7 +29,7 @@ namespace SimpleCMS.Application.UnitTests.Contents.Commands
             var id = 1;
             var newDescription = "An updated content description.";
 
-            var command = new UpsertContentCommand() { Id = id, Name = "Content One", Description = newDescription, TopicId = validTopicId };
+            var command = new UpsertContentCommand() { Id = id, Title = "Content One", Description = newDescription, TopicId = validTopicId };
             await _handler.Handle(command, CancellationToken.None);
 
             var content = await _context.Contents.FindAsync(id);
@@ -60,7 +60,7 @@ namespace SimpleCMS.Application.UnitTests.Contents.Commands
             var contentName = "New Content";
             var contentDescription = "New content description";
 
-            var command = new UpsertContentCommand() { Name = contentName, Description = contentDescription, TopicId = validTopicId };
+            var command = new UpsertContentCommand() { Title = contentName, Description = contentDescription, TopicId = validTopicId };
             await _handler.Handle(command, CancellationToken.None);
 
             var content = await _context.Contents.FindAsync(2);

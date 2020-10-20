@@ -2,6 +2,37 @@
 SimpleCMS Changelog
 =========
 
+Version 0.4
+--
+**2020/10/20**
+
+**SPA:**
+
+Added:
+ - Created Vue SPA project
+ - Added NavBar, SearchBar, and Content template components
+ - Pinned content state, mutations, and actions in the store
+ - Pinned content toolbar to allow quick access to pinned content
+ - Settings toolbar and relevant state, mutations and actions in store for toggling toolbar
+ - Search bar functionality
+ - Edit content modal including preview of how the content will be displayed
+ - Search Filter Options component to allow search filtering
+ - Currently Open toolbar component which allows users to keep different contents open and switch between them
+
+Removed:
+ - Settings route
+ - Home and Settings route links in NavBar component
+
+
+**API:**
+
+Changed:
+ - Renamed all 'name' fields to 'title' to avoid any ambiguity
+ - Moved ContentDetailVM from ...Queries.GetContentDetail to ...Queries.Common (to be shared amongst content queries)
+
+Removed:
+ - ContentDTO (Usage replaced by shared ContentDetailVM)
+
 Version 0.3
 ---
 **2020/05/29**

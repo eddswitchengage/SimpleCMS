@@ -28,19 +28,19 @@ namespace SimpleCMS.Application.UnitTests.Common
         private static void Seed(SimpleDbContext context)
         {
             context.Categories.AddRange(new Domain.Entities.Category[] {
-                new Domain.Entities.Category(){CategoryId = 1, Name = "Non-empty Category"},
-                new Domain.Entities.Category(){CategoryId = 2, Name = "Empty Category"},
+                new Domain.Entities.Category(){CategoryId = 1, Title = "Non-empty Category"},
+                new Domain.Entities.Category(){CategoryId = 2, Title = "Empty Category"},
             });
 
             context.Topics.AddRange(new Domain.Entities.Topic[]
             {
-                new Domain.Entities.Topic() { CategoryId = 1, TopicId = 1, Name = "Non-empty Topic" },
-                new Domain.Entities.Topic() { CategoryId = 1, TopicId = 2, Name = "Empty Topic" },
+                new Domain.Entities.Topic() { CategoryId = 1, TopicId = 1, Title = "Non-empty Topic" },
+                new Domain.Entities.Topic() { CategoryId = 1, TopicId = 2, Title = "Empty Topic" },
             });
 
             context.Contents.AddRange(new Domain.Entities.Content[]
             {
-                new Domain.Entities.Content() { TopicId = 1, ContentId = 1, Name = "Content One" },
+                new Domain.Entities.Content() { TopicId = 1, ContentId = 1, Title = "Content One" },
             });
 
             context.SaveChanges();

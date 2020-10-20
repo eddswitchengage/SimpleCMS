@@ -41,7 +41,7 @@ namespace SimpleCMS.Application.Topics.Commands.UpsertTopic
                 _context.Topics.Add(topic);
             }
 
-            topic.Name = request.Name;
+            topic.Title = request.Title;
             topic.Description = request.Description;
             topic.CategoryId = request.CategoryId;
 

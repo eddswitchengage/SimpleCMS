@@ -33,7 +33,7 @@ namespace SimpleCMS.Application.Categories.Commands.UpsertCategory
                 _context.Categories.Add(category);
             }
 
-            category.Name = request.Name;
+            category.Title = request.Title;
             category.Description = request.Description;
 
             await _context.SaveChangesAsync(cancellationToken);

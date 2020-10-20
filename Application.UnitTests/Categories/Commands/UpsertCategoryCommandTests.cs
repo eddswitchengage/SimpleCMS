@@ -28,7 +28,7 @@ namespace SimpleCMS.Application.UnitTests.Categories.Commands
             var id = 1;
             var newDescription = "I have added this description";
 
-            var command = new UpsertCategoryCommand() { Id = id, Name = "Non-empty category", Description = newDescription };
+            var command = new UpsertCategoryCommand() { Id = id, Title = "Non-empty category", Description = newDescription };
             await _handler.Handle(command, CancellationToken.None);
 
             var category = await _context.Categories.FindAsync(id);
@@ -40,7 +40,7 @@ namespace SimpleCMS.Application.UnitTests.Categories.Commands
         {
             var id = 10;
 
-            var command = new UpsertCategoryCommand() { Id = id, Name = "New Category", Description = "New category description" };
+            var command = new UpsertCategoryCommand() { Id = id, Title = "New Category", Description = "New category description" };
 
             await ShouldThrowAsyncExtensions.ShouldThrowAsync<NotFoundException>(() => _handler.Handle(command, CancellationToken.None));
         }
@@ -51,14 +51,14 @@ namespace SimpleCMS.Application.UnitTests.Categories.Commands
             var categoryName = "New Category";
             var categoryDescription = "A brand new category";
 
-            var command = new UpsertCategoryCommand() { Name = categoryName, Description = categoryDescription };
+            var command = new UpsertCategoryCommand() { Title = categoryName, Description = categoryDescription };
 
             await _handler.Handle(command, CancellationToken.None);
 
             var category = await _context.Categories.LastOrDefaultAsync();
 
             category.ShouldNotBe(null);
-            category.Name.ShouldBe(categoryName);
+            category.Title.ShouldBe(categoryName);
             category.Description.ShouldBe(categoryDescription);
         }
     }

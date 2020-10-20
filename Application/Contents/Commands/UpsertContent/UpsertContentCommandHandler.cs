@@ -38,8 +38,9 @@ namespace SimpleCMS.Application.Contents.Commands.UpsertContent
             }
 
             content.TopicId = request.TopicId;
-            content.Name = request.Name;
+            content.Title = request.Title;
             content.Description = request.Description;
+            content.HTMLBody = request.HTMLBody;
 
             await _context.SaveChangesAsync(cancellationToken);
 

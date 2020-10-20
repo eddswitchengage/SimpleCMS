@@ -6,7 +6,7 @@ namespace SimpleCMS.Application.Topics.Commands.UpsertTopic
     {
         public UpsertTopicCommandValidator()
         {
-            RuleFor(v => v.Name).NotEmpty();
+            RuleFor(v => v.Title).NotEmpty();
             RuleFor(v => v.CategoryId).NotEmpty();
         }
     }

@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SimpleCMS.Application.Contents.Queries.GetContentsList;
-using SimpleCMS.Application.Contents.Queries.GetContentDetail;
-using System;
-using System.Threading.Tasks;
-using SimpleCMS.Application.Contents.Commands.UpsertContent;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using SimpleCMS.Application.Contents.Commands.DeleteContent;
+using SimpleCMS.Application.Contents.Commands.UpsertContent;
+using SimpleCMS.Application.Contents.Queries.GetContentDetail;
+using SimpleCMS.Application.Contents.Queries.GetContentsList;
+using System.Threading.Tasks;
 
 namespace SimpleCMS.API.Controllers
 {

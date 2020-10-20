@@ -1,18 +1,29 @@
 <template>
   <div id="app">
-    <nav-bar />
-    <router-view />
+    <nav-bar class="nav-view" />
+    <div class="app-view">
+      <router-view />
+    </div>
+    <settings-toolbar />
+    <edit-content-modal />
+    <currently-open-toolbar />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import NavBar from "@/components/NavBar.vue";
+import NavBar from "@/components/NavBar/NavBar.vue";
+import SettingsToolbar from "@/components/SettingsToolbar/SettingsToolbar.vue";
+import EditContentModal from "@/components/EditContentModal/EditContentModal.vue";
+import CurrentlyOpenToolbar from "@/components/CurrentlyOpenToolbar/CurrentlyOpenToolbar.vue";
 
 export default Vue.extend({
   components: {
-    NavBar
-  }
+    NavBar,
+    SettingsToolbar,
+    EditContentModal,
+    CurrentlyOpenToolbar,
+  },
 });
 </script>
 
@@ -22,17 +33,23 @@ export default Vue.extend({
   --clr-panel: #1f2935;
   --clr-text: #e1e2e4;
   --clr-text-light: #4c525d;
-  --clr-highlight: #0037fa;
+  --clr-highlight: #204be6;
+  --clr-danger: #be0029;
+  --dim-navbar: 62px;
 }
 
+html,
 body {
-  background-color: var(--clr-background);
+  height: 100%;
   margin: 0;
+  background-color: var(--clr-background);
+  overflow: hidden;
 }
 
 /* Default App Styling */
 
 #app {
+  height: 100%;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -40,28 +57,75 @@ body {
   color: var(--clr-text);
 }
 
-#app input[type="text"] {
+#app .nav-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+}
+
+#app .app-view {
+  position: absolute;
+  top: var(--dim-navbar);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 10px;
+}
+
+#app input[type="text"],
+textarea,
+select {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
   background: none;
   outline: none;
   border: none;
   color: var(--clr-text-light);
 }
 
-#app input[type="text"]:focus {
+#app select {
   color: var(--clr-text);
 }
 
-#app .panel {
-  background-color: var(--clr-panel);
-  border-radius: 10px;
-  display: inline-block;
-  padding: 10px 35px;
-  margin: 15px;
-  box-shadow: 0px 10px 25px -15px #000;
+#app input[type="text"]:focus,
+textarea:focus {
+  color: var(--clr-text);
 }
 
 #app .text-light {
   color: var(--clr-text-light);
+}
+
+#app .noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+/* Scrollbar Styling */
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--clr-text-light);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--clr-text);
 }
 
 /* CSS components */

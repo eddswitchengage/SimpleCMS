@@ -23,7 +23,7 @@ namespace SimpleCMS.Application.UnitTests.Topics.Commands
             var id = 1;
             var newDescription = "A brand new topic description";
 
-            var command = new UpsertTopicCommand() { Id = id, CategoryId = 1, Description = newDescription, Name = "Non-empty Topic" };
+            var command = new UpsertTopicCommand() { Id = id, CategoryId = 1, Description = newDescription, Title = "Non-empty Topic" };
             await _handler.Handle(command, CancellationToken.None);
 
             var topic = await _context.Topics.FindAsync(id);
@@ -54,7 +54,7 @@ namespace SimpleCMS.Application.UnitTests.Topics.Commands
             var topicName = "New Topic";
             var topicDescription = "Nice new topic description";
 
-            var command = new UpsertTopicCommand() { Name = topicName, Description = topicDescription, CategoryId = 1 };
+            var command = new UpsertTopicCommand() { Title = topicName, Description = topicDescription, CategoryId = 1 };
             await _handler.Handle(command, CancellationToken.None);
 
             var topic = await _context.Topics.FindAsync(3);

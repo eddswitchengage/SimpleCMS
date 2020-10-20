@@ -8,9 +8,9 @@ namespace SimpleCMS.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.Property(e => e.Name)
+            builder.Property(e => e.Title)
                 .IsRequired()
-                .HasMaxLength(14);
+                .HasMaxLength(32);
         }
     }
 }

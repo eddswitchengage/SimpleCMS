@@ -2,7 +2,7 @@
 using SimpleCMS.Application.Common.Mappings;
 using SimpleCMS.Domain.Entities;
 
-namespace SimpleCMS.Application.Contents.Queries.GetContentDetail
+namespace SimpleCMS.Application.Contents.Queries.Common
 {
     public class ContentDetailVM : IMapFrom<Content>
     {
@@ -10,8 +10,9 @@ namespace SimpleCMS.Application.Contents.Queries.GetContentDetail
 
         public int TopicId { get; set; }
 
-        public string Name { get; set; }
+        public string Title { get; set; }
         public string Description { get; set; }
+        public string HTMLBody { get; set; }
 
         public void Mapping(Profile profile) =>
             profile.CreateMap<Content, ContentDetailVM>()

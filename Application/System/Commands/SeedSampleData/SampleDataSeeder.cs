@@ -31,8 +31,8 @@ namespace SimpleCMS.Application.System.Commands.SeedSampleData
 
             _context.Categories.Add(new Category()
             {
-                Name = "Category One",
-                Description = "A simple category, it doesn't ask for much and lives within its means."
+                Title = "Uncategorised",
+                Description = "Default category."
             });
 
             await _context.SaveChangesAsync(cancellationToken);
@@ -47,8 +47,8 @@ namespace SimpleCMS.Application.System.Commands.SeedSampleData
             _context.Topics.Add(new Topic()
             {
                 CategoryId = categoryId,
-                Name = "Topic One",
-                Description = "This topic means business. There's no messing around when topic one is in town, that's for sure.",
+                Title = "Uncategorised",
+                Description = "Default topic.",
             });
 
             await _context.SaveChangesAsync(cancellationToken);
@@ -58,12 +58,12 @@ namespace SimpleCMS.Application.System.Commands.SeedSampleData
         {
             if (_context.Contents.Any()) return;
 
-            int topicId = _context.Topics.ToList()[0].TopicId;
+            Topic defaultTopic = _context.Topics.First();
 
             _context.Contents.Add(new Content()
             {
-                TopicId = topicId,
-                Name = "Simple Content",
+                TopicId = defaultTopic.TopicId,
+                Title = "Simple Content",
                 Description = "This guy really is simple, but otherwise harmless.",
             });
 

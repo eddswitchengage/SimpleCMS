@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
 using Shouldly;
+using SimpleCMS.Application.Contents.Queries.Common;
 using SimpleCMS.Application.Contents.Queries.GetContentDetail;
 using SimpleCMS.Application.UnitTests.Common;
 using SimpleCMS.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;

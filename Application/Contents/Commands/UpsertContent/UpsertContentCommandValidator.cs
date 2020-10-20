@@ -7,7 +7,7 @@ namespace SimpleCMS.Application.Contents.Commands.UpsertContent
         public UpsertContentCommandValidator()
         {
             RuleFor(v => v.TopicId).NotEmpty();
-            RuleFor(v => v.Name).NotEmpty();
+            RuleFor(v => v.Title).NotEmpty();
         }
     }
 }

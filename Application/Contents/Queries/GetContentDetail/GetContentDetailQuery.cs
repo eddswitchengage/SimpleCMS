@@ -1,9 +1,5 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SimpleCMS.Application.Contents.Queries.Common;
 
 namespace SimpleCMS.Application.Contents.Queries.GetContentDetail
 {

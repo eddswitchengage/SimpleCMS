@@ -1,17 +1,43 @@
 <template>
   <div class="search-bar">
     <i class="las la-search"></i>
-    <input type="text" placeholder="Search..." />
-    <i class="las la-question-circle tooltip">
+    <input
+      type="text"
+      v-model="searchString"
+      placeholder="Search..."
+      v-on:keyup.enter="search"
+    />
+
+    <i class="las la-question-circle tooltip" v-if="searchString === ''">
       <span class="tooltip-text">Add # prefix to search by id.</span>
     </i>
+    <i class="las la-times" v-if="searchString !== ''" v-on:click="clear" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import { mapActions } from "vuex";
+
 export default Vue.extend({
-  name: "SearchBar"
+  name: "SearchBar",
+
+  data: function () {
+    return {
+      searchString: "",
+    };
+  },
+
+  methods: {
+    ...mapActions(["performSearch"]),
+    search: async function () {
+      this.performSearch(this.searchString);
+    },
+    clear: function () {
+      this.searchString = "";
+      this.search();
+    },
+  },
 });
 </script>
 
@@ -21,21 +47,23 @@ export default Vue.extend({
   padding: 5px 10px;
   border-radius: 6px;
   height: 24px;
+  width: 400px;
   display: flex;
   align-items: center;
 
   position: relative;
 
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   transition-duration: 100ms;
 }
 
 .search-bar:focus-within {
-  border: 1px solid var(--clr-highlight);
+  border: 2px solid var(--clr-highlight);
   transition-duration: 150ms;
 }
 
 .search-bar input {
+  width: 100%;
   font-size: 18px;
 }
 
