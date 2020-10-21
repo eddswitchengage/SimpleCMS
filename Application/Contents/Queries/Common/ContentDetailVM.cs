@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SimpleCMS.Application.Common.Mappings;
 using SimpleCMS.Domain.Entities;
+using System;
 
 namespace SimpleCMS.Application.Contents.Queries.Common
 {
@@ -13,6 +14,9 @@ namespace SimpleCMS.Application.Contents.Queries.Common
         public string Title { get; set; }
         public string Description { get; set; }
         public string HTMLBody { get; set; }
+
+        public DateTime LastModified { get; set; }
+        public DateTime Created { get; set; }
 
         public void Mapping(Profile profile) =>
             profile.CreateMap<Content, ContentDetailVM>()

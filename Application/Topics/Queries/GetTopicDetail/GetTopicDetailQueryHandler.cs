@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SimpleCMS.Application.Common.Interfaces;
+using SimpleCMS.Application.Topics.Queries.Common;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;

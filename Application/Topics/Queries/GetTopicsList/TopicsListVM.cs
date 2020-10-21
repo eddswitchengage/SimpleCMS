@@ -1,14 +1,11 @@
-﻿using System;
+﻿using SimpleCMS.Application.Topics.Queries.Common;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SimpleCMS.Application.Topics.Queries.GetTopicsList
 {
     public class TopicsListVM
     {
-        public IList<TopicDTO> Topics { get; set; }
+        public IList<TopicDetailVM> Topics { get; set; }
         public int Count { get; set; }
     }
 }

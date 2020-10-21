@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using SimpleCMS.Application.Categories.Queries.Common;
 using SimpleCMS.Application.Common.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace SimpleCMS.Application.Categories.Queries.GetCategoriesList
         public async Task<CategoriesListVM> Handle(GetCategoriesListQuery request, CancellationToken cancellationToken)
         {
             var categories = await _context.Categories
-                .ProjectTo<CategoryDTO>(_mapper.ConfigurationProvider)
+                .ProjectTo<CategoryDetailVM>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
             var viewModel = new CategoriesListVM()

@@ -2,6 +2,37 @@
 SimpleCMS Changelog
 =========
 
+
+Version 0.4.1
+--
+**2020/10/21**
+
+**SPA:**
+
+Added:
+ - Edit category & topic modal (EditHierarchyModal). Allows users to create and manage both categories and topics.
+ - Added HierarchyItemRow component which is used to represent topic and category items.
+ - HierarchyItemRowList component to display multiple HierarchyItemRow components.
+ - Added EditHierarchyButton to NavBar to allow the opening of the EditHierarchyModal.
+ - SelectTopicDropdown displays a list of topics categorised into option groups by their parent category.
+ - Implemented SelectTopicDropdown component in EditContentModal to allow a content's parent topic to be changed.
+
+
+**API:**
+
+Changed:
+ - Moved TopicDetailVM to ...Topics.Queries.Common (to be shared among topic queries)
+ - Moved CategoryDetailVM to ...Categories.Queries.Common (to be shared among topic queries)
+ - Renamed both TopicContentDTO and CategoryTopicDTO to TopicContentVM and CategoryTopicVM, respectively. (Classes contained behaviours and therefore should be VM).
+ - TopicDetailVM no longer contains associated Content list. Content should be retrieved from the Content endpoints using search filters (e.g. topicId = 1 for all contents under topic 1)
+ - ContentDetailVM now contains LastModified and Created date time values.
+
+Removed:
+ - TopicDTO (usage replaced by TopicDetailVM)
+ - CategoryDTO (usage replaced by CategoryDetailVM)
+ - ContentTopicDTO
+
+
 Version 0.4
 --
 **2020/10/20**

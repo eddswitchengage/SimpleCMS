@@ -9,6 +9,7 @@
 
     <div class="action-buttons">
       <pinned-content-button />
+      <edit-hierarchy-button />
       <settings-button />
     </div>
   </div>
@@ -22,6 +23,7 @@ import SearchBar from "./SearchBar.vue";
 import SettingsButton from "./SettingsButton.vue";
 import PinnedContentButton from "./PinnedContentButton.vue";
 import CreateContentButton from "./CreateContentButton.vue";
+import EditHierarchyButton from "./EditHierarchyButton.vue";
 
 export default Vue.extend({
   name: "NavBar",
@@ -31,6 +33,7 @@ export default Vue.extend({
     SettingsButton,
     CreateContentButton,
     PinnedContentButton,
+    EditHierarchyButton,
   },
 });
 </script>
@@ -66,6 +69,6 @@ export default Vue.extend({
 .action-buttons {
   display: flex;
   justify-content: space-between;
-  width: 70px;
+  width: 120px;
 }
 </style>

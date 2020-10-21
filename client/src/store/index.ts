@@ -56,6 +56,7 @@ export default new Vuex.Store({
     // ---- Settings ---- //
     settingsBarShown: false,
     editModalShown: false,
+    editHierarchyModalShown: false,
     pinnedContentShown: false,
   },
   mutations: {
@@ -101,6 +102,9 @@ export default new Vuex.Store({
     },
     setEditModalShown(state, isShown: boolean) {
       state.editModalShown = isShown;
+    },
+    setEditHierarchyModalShown(state, isShown: boolean) {
+      state.editHierarchyModalShown = isShown;
     },
   },
   actions: {
@@ -183,8 +187,7 @@ export default new Vuex.Store({
             categoryId: 1,
           },
           {
-            title:
-              "Batman begins again and again",
+            title: "Batman begins again and again",
             id: 305,
             description:
               "This content has quite a long description. Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
@@ -194,7 +197,8 @@ export default new Vuex.Store({
             categoryId: 1,
           },
           {
-            title: "Truly, the longest title anyone has ever seen! Truly! Really really long!",
+            title:
+              "Truly, the longest title anyone has ever seen! Truly! Really really long!",
             id: 432,
             description:
               "This content has quite a long description. Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
@@ -245,6 +249,9 @@ export default new Vuex.Store({
     closeEditModal({ commit }) {
       commit("setEditModalShown", false);
     },
+    toggleEditHierarchyModalShown({ state, commit }) {
+      commit("setEditHierarchyModalShown", !state.editHierarchyModalShown);
+    },
   },
   getters: {
     // ---- Content ---- //
@@ -289,6 +296,9 @@ export default new Vuex.Store({
     },
     getEditModalShown: (state) => {
       return state.editModalShown;
+    },
+    getEditHierarchyModalShown: (state) => {
+      return state.editHierarchyModalShown;
     },
   },
 });

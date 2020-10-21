@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using System.Runtime.InteropServices;
+using SimpleCMS.Application.Categories.Queries.Common;
 
 namespace SimpleCMS.Application.Categories.Queries.GetCategoryDetail
 {

@@ -6,6 +6,7 @@
     </div>
     <settings-toolbar />
     <edit-content-modal />
+    <edit-hierarchy-modal />
     <currently-open-toolbar />
   </div>
 </template>
@@ -15,6 +16,7 @@ import Vue from "vue";
 import NavBar from "@/components/NavBar/NavBar.vue";
 import SettingsToolbar from "@/components/SettingsToolbar/SettingsToolbar.vue";
 import EditContentModal from "@/components/EditContentModal/EditContentModal.vue";
+import EditHierarchyModal from "@/components/EditHierarchyModal/EditHierarchyModal.vue";
 import CurrentlyOpenToolbar from "@/components/CurrentlyOpenToolbar/CurrentlyOpenToolbar.vue";
 
 export default Vue.extend({
@@ -22,6 +24,7 @@ export default Vue.extend({
     NavBar,
     SettingsToolbar,
     EditContentModal,
+    EditHierarchyModal,
     CurrentlyOpenToolbar,
   },
 });

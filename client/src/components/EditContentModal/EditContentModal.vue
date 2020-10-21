@@ -41,13 +41,7 @@
 
       <div class="body">
         <div class="edit" v-if="!showingPreview">
-          <select>
-            <optgroup label="Category 1">
-              <option>Topic 1</option>
-              <option>Topic 2</option>
-              <option>Topic 3</option>
-            </optgroup>
-          </select>
+          <select-topic-dropdown :initialTopicId="content.topicId" />
 
           <input
             type="text"
@@ -93,12 +87,13 @@
 import Vue from "vue";
 import { mapGetters, mapActions } from "vuex";
 import PinContentButton from "@/components/ContentTile/PinContentButton.vue";
+import SelectTopicDropdown from "./SelectTopicDropdown.vue";
 import ContentPreview from "./ContentPreview.vue";
 
 export default Vue.extend({
   name: "EditContentModal",
 
-  data: function () {
+  data: function() {
     return {
       showingPreview: false,
     };
@@ -112,20 +107,21 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["closeEditModal", "closeContent"]),
-    hideOrCloseModal: function (event: any) {
+    hideOrCloseModal: function(event: any) {
       const classes = event.target.className.split(" ");
       if (classes.includes("close-modal") || classes.includes("hide-modal")) {
         this.closeEditModal();
         if (classes.includes("close-modal")) this.closeContent(this.content);
       }
     },
-    showPreview: function (show: boolean) {
+    showPreview: function(show: boolean) {
       this.showingPreview = show;
     },
   },
   components: {
     PinContentButton,
     ContentPreview,
+    SelectTopicDropdown,
   },
 });
 </script>

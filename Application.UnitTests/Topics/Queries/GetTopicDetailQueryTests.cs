@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Shouldly;
+using SimpleCMS.Application.Topics.Queries.Common;
 using SimpleCMS.Application.Topics.Queries.GetTopicDetail;
 using SimpleCMS.Application.UnitTests.Common;
 using SimpleCMS.Persistence;

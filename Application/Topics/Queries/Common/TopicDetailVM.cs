@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
 using SimpleCMS.Application.Common.Mappings;
+using SimpleCMS.Application.Topics.Queries.GetTopicDetail;
 using SimpleCMS.Domain.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SimpleCMS.Application.Topics.Queries.GetTopicDetail
+namespace SimpleCMS.Application.Topics.Queries.Common
 {
     public class TopicDetailVM : IMapFrom<Topic>
     {
@@ -15,14 +12,11 @@ namespace SimpleCMS.Application.Topics.Queries.GetTopicDetail
 
         public int CategoryId { get; set; }
 
-        public string Name { get; set; }
+        public string Title { get; set; }
         public string Description { get; set; }
-
-        public virtual List<TopicContentDTO> Contents { get; set; }
 
         public void Mapping(Profile profile) =>
             profile.CreateMap<Topic, TopicDetailVM>()
-            .ForMember(v => v.Id, opt => opt.MapFrom(e => e.TopicId))
-            .ForMember(v => v.Contents, opt => opt.MapFrom(e => e.Contents));
+            .ForMember(v => v.Id, opt => opt.MapFrom(e => e.TopicId));
     }
 }
