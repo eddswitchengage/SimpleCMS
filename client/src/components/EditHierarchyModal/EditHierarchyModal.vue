@@ -16,7 +16,7 @@
             v-on:selected="selectCategory"
             v-on:itemUpdated="updateCategory"
             :showAllOption="true"
-            :initialSelectedItemId="0"
+            :initialSelectedItemId="selectedCategoryId"
           />
         </div>
         <div class="topics">
@@ -24,6 +24,7 @@
             v-if="selectedCategoryId !== -1"
             :items="filterTopics"
             :showAllOption="false"
+            v-on:itemUpdated="updateTopic"
           />
         </div>
       </div>
@@ -40,7 +41,7 @@ import HierarchyItemRowList from "./HierarchyItemRowList.vue";
 export default Vue.extend({
   name: "EditHierarchyModal",
 
-  data: function() {
+  data: function () {
     return {
       selectedCategoryId: 0,
       categories: [] as Category[],
@@ -49,30 +50,51 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["toggleEditHierarchyModalShown"]),
-    closeModal: function(event: any) {
+    closeModal: function (event: any) {
       const classes = event.target.className.split(" ");
       if (classes.includes("close-modal")) {
         this.toggleEditHierarchyModalShown();
       }
     },
 
-    selectCategory: function(categoryId: number) {
+    selectCategory: function (categoryId: number) {
       this.selectedCategoryId = categoryId;
     },
-    updateCategory: function(categoryId: number, newTitle: string) {
-      console.log("UPDATING");
+    updateCategory: function (categoryId: number, newTitle: string) {
       if (categoryId === -1) {
         if (newTitle.length > 0) this.addCategory(newTitle);
       } else {
         this.categories.find((c) => c.id === categoryId).title = newTitle;
+        this.selectedCategoryId = categoryId;
+        this.categories = [...this.categories];
       }
     },
-    addCategory: function(title: string) {
+    addCategory: function (title: string) {
+      const id = Math.random() * 1000;
       const newCategory: Category = {
-        id: Math.random() * 1000,
+        id,
         title,
       };
       this.categories.push(newCategory);
+      this.selectedCategoryId = id;
+    },
+
+    updateTopic: function (topicId: number, newTitle: string) {
+      if (topicId === -1) {
+        if (newTitle.length > 0) this.addTopic(newTitle);
+      } else {
+        this.topics.find((t) => t.id === topicId).title = newTitle;
+        this.topics = [...this.topics];
+      }
+    },
+    addTopic: function (title: string) {
+      const id = Math.random() * 1000;
+      const newTopic: Topic = {
+        id,
+        title,
+        categoryId: this.selectedCategoryId,
+      };
+      this.topics.push(newTopic);
     },
   },
   computed: {
@@ -85,7 +107,7 @@ export default Vue.extend({
     },
   },
   watch: {
-    getEditHierarchyModalShown: function(val) {
+    getEditHierarchyModalShown: function (val) {
       if (val === true) {
         this.topics = this.getTopics;
         this.categories = this.getCategories;

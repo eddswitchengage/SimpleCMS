@@ -35,7 +35,7 @@ export default Vue.extend({
     selected: Boolean,
     initiallyEditing: Boolean,
   },
-  data: function() {
+  data: function () {
     return {
       editing: this.initiallyEditing,
       title: this.item.title,
@@ -43,27 +43,27 @@ export default Vue.extend({
     };
   },
   methods: {
-    selectInput: function() {
+    selectInput: function () {
       this.editing = true;
       this.$refs.input.select();
     },
-    onInputBlur: function() {
+    onInputBlur: function () {
+      if (this.changesMade) return;
       this.editing = false;
       this.title = this.item.title;
       this.$emit("blurred");
     },
-    updateTitle: function() {
-      console.log("DOES IT GET HERE?");
-      //TRY STOPPING THE EVENT PROPAGATION AT THIS POINT TO PREVENT ON INPUT BLUR FIRING
+    updateTitle: function () {
       this.$emit("titleUpdated", this.item.id, this.title);
       this.editing = false;
+      this.changesMade = false;
     },
   },
-  mounted: function() {
+  mounted: function () {
     if (this.initiallyEditing === true) this.selectInput();
   },
   watch: {
-    title: function(newVal) {
+    title: function (newVal) {
       this.changesMade = newVal !== this.item.title;
     },
   },

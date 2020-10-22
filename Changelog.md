@@ -2,6 +2,14 @@
 SimpleCMS Changelog
 =========
 
+Version 0.4.2
+--
+**2020/10/22**
+
+**SPA:**
+
+Added:
+ - Added funcitonality to allow editing of topic and category titles within the EditHierarchyModal
 
 Version 0.4.1
 --

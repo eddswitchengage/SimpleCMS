@@ -13,6 +13,7 @@
       :selected="selectedItemId === item.id"
       v-bind:key="item.id"
       v-on:selected="selectItem(item.id)"
+      v-on:titleUpdated="updateItem"
     />
 
     <hierarchy-item-row
@@ -25,7 +26,10 @@
       v-on:blurred="selectItem(0)"
     />
 
-    <button class="add-button" v-on:click="selectItem(-1)">
+    <button
+      class="add-button"
+      v-on:click="selectItem(-1)"
+    >
       <i class="las la-plus" />
     </button>
   </div>
@@ -42,19 +46,18 @@ export default Vue.extend({
     initialSelectedItemId: Number,
     showAllOption: Boolean,
   },
-  data: function() {
+  data: function () {
     return {
       selectedItemId: this.initialSelectedItemId,
       newItem: { id: -1, title: "" },
     };
   },
   methods: {
-    selectItem: function(itemId: number) {
+    selectItem: function (itemId: number) {
       this.selectedItemId = itemId;
       this.$emit("selected", this.selectedItemId);
     },
-    updateItem: function(itemId: number, newTitle: string) {
-      console.log("GETS HERE");
+    updateItem: function (itemId: number, newTitle: string) {
       this.$emit("itemUpdated", itemId, newTitle);
     },
   },
@@ -62,9 +65,9 @@ export default Vue.extend({
     HierarchyItemRow,
   },
   watch: {
-    items: function(newVal) {
+    items: function (newVal) {
       //When new items are passed, reset the current selection
-      this.selectedItemId = 0;
+      this.selectItem(this.initialSelectedItemId);
     },
   },
 });
