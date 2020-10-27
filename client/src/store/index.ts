@@ -2,6 +2,8 @@ import Vue from "vue";
 import Vuex from "vuex";
 import VuexPersist from "vuex-persist";
 import { Content, Category, Topic, SearchFilters } from "@/models";
+import APIClient from "@/API";
+import { SearchQuery } from "../models";
 
 /*
     ------ SimpleCMS Store ------
@@ -37,21 +39,12 @@ export default new Vuex.Store({
     searchTerm: "",
     searchFilters: {} as SearchFilters,
     searchResults: [] as Content[],
+    pageIndex: 1,
+    pageSize: 20,
 
-    topics: [
-      { id: 1, title: "Topic One", categoryId: 1 },
-      { id: 2, title: "Topic Two", categoryId: 1 },
-      { id: 3, title: "Topic Three", categoryId: 2 },
-      { id: 4, title: "Topic Four", categoryId: 2 },
-      { id: 5, title: "Topic Five", categoryId: 2 },
-    ],
-    categories: [
-      { id: 1, title: "Category 1" },
-      { id: 2, title: "Category 2" },
-    ],
-    /*
-      Cache of each topic and category, populated when app is launched.
-    */
+    //Cache of each topic and category, populated when app is launched.
+    topics: [] as Topic[],
+    categories: [] as Category[],
 
     // ---- Settings ---- //
     settingsBarShown: false,
@@ -93,6 +86,13 @@ export default new Vuex.Store({
       state.searchResults = results;
     },
 
+    setTopics(state, topics: Topic[]) {
+      state.topics = topics;
+    },
+    setCategories(state, categories: Category[]) {
+      state.categories = categories;
+    },
+
     // ---- Settings ---- //
     setSettingsBarShown(state, isShown: boolean) {
       state.settingsBarShown = isShown;
@@ -126,113 +126,38 @@ export default new Vuex.Store({
       commit("removeFromOpen", content);
     },
 
+    setSearchTerm({ commit }, searchTerm: string) {
+      commit("setSearchTerm", searchTerm);
+    },
     setSearchFilters({ commit }, filters: SearchFilters) {
       commit("setSearchFilters", filters);
     },
-    performSearch({ state, commit }, searchTerm: string) {
-      commit("setSearchTerm", searchTerm);
 
-      //search
-      if (searchTerm !== "" && searchTerm !== "empty") {
-        commit("setSearchResults", [
-          {
-            title: "Topical content based on true fact",
-            id: 113,
-            description: "This is a nice example of a content object",
-            htmlBody:
-              "<p>This is an example of the HTML body of a piece of content</p>",
-            topic: {
-              title: "Topic 1",
-              id: 1,
-            },
-            category: {
-              title: "Category 1",
-              id: 1,
-            },
-            tags: "tagnumberone, topicalcontent,somestuff, engineer",
-          },
-          {
-            title: "Inter-railing for dummies: the long road",
-            id: 221,
-            description:
-              "This is anodther example of a content object, except this one contains a typo",
-            topic: {
-              title: "Topic 1",
-              id: 1,
-            },
-            category: {
-              title: "Category 1",
-              id: 1,
-            },
-          },
-        ]);
-      } else if (searchTerm === "") {
-        commit("setSearchResults", [
-          {
-            title: "Topical content based on true fact",
-            id: 113,
-            description: "This is a nice example of a content object",
-            htmlBody:
-              "<p>This is an example of the HTML body of a piece of content</p>",
-            topicId: 1,
-            categoryId: 1,
-            tags: "tagnumberone, topicalcontent,somestuff, engineer",
-          },
-          {
-            title: "Inter-railing for dummies: the long road",
-            id: 221,
-            description:
-              "This is anodther example of a content object, except this one contains a typo",
-            topicId: 1,
-            categoryId: 1,
-          },
-          {
-            title: "Batman begins again and again",
-            id: 305,
-            description:
-              "This content has quite a long description. Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
-              "Sed finibus eleifend venenatis. Praesent non augue sit amet tortor mattis laoreet sed euismod ex. Integer vitae metus velit." +
-              "Sed finibus eleifend venenatis. Praesent non augue sit amet tortor mattis laoreet sed euismod ex. Integer vitae metus velit.",
-            topicId: 1,
-            categoryId: 1,
-          },
-          {
-            title:
-              "Truly, the longest title anyone has ever seen! Truly! Really really long!",
-            id: 432,
-            description:
-              "This content has quite a long description. Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
-              "Sed finibus eleifend venenatis. Praesent non augue sit amet tortor mattis laoreet sed euismod ex. Integer vitae metus velit." +
-              "Sed finibus eleifend venenatis. Praesent non augue sit amet tortor mattis laoreet sed euismod ex. Integer vitae metus velit.",
-            topicId: 1,
-            categoryId: 1,
-          },
-          {
-            title:
-              "Texas city's professional roller blading team loses to south dakota amateurs",
-            id: 512,
-            description:
-              "This content has quite a long description. Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
-              "Sed finibus eleifend venenatis. Praesent non augue sit amet tortor mattis laoreet sed euismod ex. Integer vitae metus velit." +
-              "Sed finibus eleifend venenatis. Praesent non augue sit amet tortor mattis laoreet sed euismod ex. Integer vitae metus velit.",
-            topicId: 1,
-            categoryId: 1,
-          },
-          {
-            title:
-              "How many times must the wind blow down the road for the cannonball to fly?",
-            id: 62,
-            description:
-              "This content has quite a long description. Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
-              "Sed finibus eleifend venenatis. Praesent non augue sit amet tortor mattis laoreet sed euismod ex. Integer vitae metus velit." +
-              "Sed finibus eleifend venenatis. Praesent non augue sit amet tortor mattis laoreet sed euismod ex. Integer vitae metus velit.",
-            topicId: 1,
-            categoryId: 1,
-          },
-        ]);
-      } else if (searchTerm === "empty") {
-        commit("setSearchResults", []);
-      }
+    performSearch({ state, commit }) {
+      const searchQuery: SearchQuery = {
+        searchTerm: state.searchTerm,
+        filters: state.searchFilters,
+        pageIndex: state.pageIndex,
+        pageSize: state.pageSize,
+      };
+      APIClient.content.getAll(searchQuery).then((results: Content[]) => {
+        commit("setSearchResults", results);
+      });
+    },
+
+    fetchTopicAndCategories({ commit }) {
+      APIClient.categories.getAll().then((categories: Category[]) => {
+        commit("setCategories", categories);
+
+        let topics: Topic[] = [];
+        for (let c = 0; c < categories.length; c++) {
+          categories[c].topics.forEach(function(topic) {
+            topic.categoryId = categories[c].id;
+          });
+          topics = [...topics, ...categories[c].topics];
+        }
+        commit("setTopics", topics);
+      });
     },
 
     // ---- Settings ---- //
@@ -255,50 +180,29 @@ export default new Vuex.Store({
   },
   getters: {
     // ---- Content ---- //
+    getPinned: (state) => state.pinned,
     pinnedContainsId: (state) => (id: number) => {
       return state.pinned.some((item) => item.id === id);
     },
-    getPinned: (state) => {
-      return state.pinned;
-    },
-    getEditing: (state) => {
-      return state.editing;
-    },
-    getOpen: (state) => {
-      return state.open;
-    },
-    getSearchFilters: (state) => {
-      return state.searchFilters;
-    },
-    getSearchResults: (state) => {
-      return state.searchResults;
-    },
 
-    getTopics: (state) => {
-      return state.topics;
-    },
+    getEditing: (state) => state.editing,
+    getOpen: (state) => state.open,
+    getSearchFilters: (state) => state.searchFilters,
+    getSearchResults: (state) => state.searchResults,
+
+    getTopics: (state) => state.topics,
     getTopicById: (state) => (id: number) => {
       return state.topics.find((topic: Topic) => topic.id === id);
     },
-    getCategories: (state) => {
-      return state.categories;
-    },
+    getCategories: (state) => state.categories,
     getCategoryById: (state) => (id: number) => {
       return state.categories.find((category: Category) => category.id === id);
     },
 
     // ---- Settings ---- //
-    getSettingsBarShown: (state) => {
-      return state.settingsBarShown;
-    },
-    getPinnedContentShown: (state) => {
-      return state.pinnedContentShown;
-    },
-    getEditModalShown: (state) => {
-      return state.editModalShown;
-    },
-    getEditHierarchyModalShown: (state) => {
-      return state.editHierarchyModalShown;
-    },
+    getSettingsBarShown: (state) => state.settingsBarShown,
+    getPinnedContentShown: (state) => state.pinnedContentShown,
+    getEditModalShown: (state) => state.editModalShown,
+    getEditHierarchyModalShown: (state) => state.editHierarchyModalShown,
   },
 });

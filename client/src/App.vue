@@ -1,5 +1,7 @@
 <template>
-  <div id="app">
+  <loading-overlay v-if="initialising" />
+
+  <div v-else id="app">
     <nav-bar class="nav-view" />
     <div class="app-view">
       <router-view />
@@ -18,14 +20,29 @@ import SettingsToolbar from "@/components/SettingsToolbar/SettingsToolbar.vue";
 import EditContentModal from "@/components/EditContentModal/EditContentModal.vue";
 import EditHierarchyModal from "@/components/EditHierarchyModal/EditHierarchyModal.vue";
 import CurrentlyOpenToolbar from "@/components/CurrentlyOpenToolbar/CurrentlyOpenToolbar.vue";
+import LoadingOverlay from "@/components/LoadingOverlay/LoadingOverlay.vue";
 
 export default Vue.extend({
+  data: function() {
+    return {
+      initialising: true,
+    };
+  },
+
+  mounted() {
+    //Cache topics and categories
+    this.$store.dispatch("fetchTopicAndCategories").then(() => {
+      this.initialising = false;
+    });
+  },
+
   components: {
     NavBar,
     SettingsToolbar,
     EditContentModal,
     EditHierarchyModal,
     CurrentlyOpenToolbar,
+    LoadingOverlay,
   },
 });
 </script>
@@ -132,7 +149,7 @@ textarea:focus {
 }
 
 /* CSS components */
-/* A collection of useful CSS components that are used throughout the app */
+/* A collection of useful CSS components that are used for the app */
 
 /* ---- TOOLTIP ----- */
 .tooltip .tooltip-text {

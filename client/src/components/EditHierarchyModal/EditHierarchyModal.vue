@@ -15,6 +15,7 @@
             :items="categories"
             v-on:selected="selectCategory"
             v-on:itemUpdated="updateCategory"
+            v-on:itemDeleted="deleteCategory"
             :showAllOption="true"
             :initialSelectedItemId="selectedCategoryId"
           />
@@ -25,6 +26,7 @@
             :items="filterTopics"
             :showAllOption="false"
             v-on:itemUpdated="updateTopic"
+            v-on:itemDeleted="deleteTopic"
           />
         </div>
       </div>
@@ -41,7 +43,7 @@ import HierarchyItemRowList from "./HierarchyItemRowList.vue";
 export default Vue.extend({
   name: "EditHierarchyModal",
 
-  data: function () {
+  data: function() {
     return {
       selectedCategoryId: 0,
       categories: [] as Category[],
@@ -50,26 +52,29 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["toggleEditHierarchyModalShown"]),
-    closeModal: function (event: any) {
+    closeModal: function(event: any) {
       const classes = event.target.className.split(" ");
       if (classes.includes("close-modal")) {
         this.toggleEditHierarchyModalShown();
       }
     },
 
-    selectCategory: function (categoryId: number) {
+    selectCategory: function(categoryId: number) {
       this.selectedCategoryId = categoryId;
     },
-    updateCategory: function (categoryId: number, newTitle: string) {
+    updateCategory: function(categoryId: number, newTitle: string) {
       if (categoryId === -1) {
         if (newTitle.length > 0) this.addCategory(newTitle);
       } else {
-        this.categories.find((c) => c.id === categoryId).title = newTitle;
-        this.selectedCategoryId = categoryId;
-        this.categories = [...this.categories];
+        const category = this.categories.find((c) => c.id === categoryId);
+        if (category != null) {
+          category.title = newTitle;
+          this.selectedCategoryId = categoryId;
+          this.categories = [...this.categories];
+        }
       }
     },
-    addCategory: function (title: string) {
+    addCategory: function(title: string) {
       const id = Math.random() * 1000;
       const newCategory: Category = {
         id,
@@ -78,16 +83,22 @@ export default Vue.extend({
       this.categories.push(newCategory);
       this.selectedCategoryId = id;
     },
+    deleteCategory: function(categoryId: number) {
+      console.log("Deleting category - ID: " + categoryId);
+    },
 
-    updateTopic: function (topicId: number, newTitle: string) {
+    updateTopic: function(topicId: number, newTitle: string) {
       if (topicId === -1) {
         if (newTitle.length > 0) this.addTopic(newTitle);
       } else {
-        this.topics.find((t) => t.id === topicId).title = newTitle;
-        this.topics = [...this.topics];
+        const topic = this.topics.find((t) => t.id === topicId);
+        if (topic != null) {
+          topic.title = newTitle;
+          this.topics = [...this.topics];
+        }
       }
     },
-    addTopic: function (title: string) {
+    addTopic: function(title: string) {
       const id = Math.random() * 1000;
       const newTopic: Topic = {
         id,
@@ -95,6 +106,9 @@ export default Vue.extend({
         categoryId: this.selectedCategoryId,
       };
       this.topics.push(newTopic);
+    },
+    deleteTopic: function(topicId: number) {
+      console.log("Deleting topic - ID: " + topicId);
     },
   },
   computed: {
@@ -107,7 +121,7 @@ export default Vue.extend({
     },
   },
   watch: {
-    getEditHierarchyModalShown: function (val) {
+    getEditHierarchyModalShown: function(val) {
       if (val === true) {
         this.topics = this.getTopics;
         this.categories = this.getCategories;

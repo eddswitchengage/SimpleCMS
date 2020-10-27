@@ -22,18 +22,19 @@ import { mapActions } from "vuex";
 export default Vue.extend({
   name: "SearchBar",
 
-  data: function () {
+  data: function() {
     return {
       searchString: "",
     };
   },
 
   methods: {
-    ...mapActions(["performSearch"]),
-    search: async function () {
-      this.performSearch(this.searchString);
+    ...mapActions(["performSearch", "setSearchTerm"]),
+    search: async function() {
+      this.setSearchTerm(this.searchString);
+      this.performSearch();
     },
-    clear: function () {
+    clear: function() {
       this.searchString = "";
       this.search();
     },

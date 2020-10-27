@@ -14,6 +14,7 @@ namespace SimpleCMS.Application.Contents.Queries.Common
         public string Title { get; set; }
         public string Description { get; set; }
         public string HTMLBody { get; set; }
+        public string Tags { get; set; }
 
         public DateTime LastModified { get; set; }
         public DateTime Created { get; set; }

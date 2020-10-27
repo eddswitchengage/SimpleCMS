@@ -1,7 +1,4 @@
 ﻿using SimpleCMS.Domain.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SimpleCMS.Domain.Entities
 {
@@ -15,5 +12,8 @@ namespace SimpleCMS.Domain.Entities
         public string Description { get; set; }
 
         public string HTMLBody { get; set; }
+        public string Tags { get; set; }
+
+        public virtual Topic Topic { get; set; }
     }
 }

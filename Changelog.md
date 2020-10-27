@@ -2,6 +2,32 @@
 SimpleCMS Changelog
 =========
 
+Version 0.4.3
+--
+**2020/10/27**
+
+**SPA:**
+
+Added:
+ - Loading stage before app starts with an overlay that displays whilst the app performs start-up initialisation
+ - SimpleAPIClient interface and APIQueryCollection interface
+ - API.ts client that integrates the SimpleCMS API
+ - LoadingOverlay and child ActivityIndicator components
+ - Implementation of contents/getall route
+ - Implementation of categories/getall route
+
+
+**API:**
+
+Added:
+ - Tags field to content entity and view model classes
+ - PaginatedList class (Application class library)
+ - Added several fields to GetContentsListQuery class to facilitate search filtering
+ - Added pagination to GetContentsListQueryHandler
+ - Added new parameters to Content GetAll route
+
+
+
 Version 0.4.2
 --
 **2020/10/22**
@@ -9,7 +35,7 @@ Version 0.4.2
 **SPA:**
 
 Added:
- - Added funcitonality to allow editing of topic and category titles within the EditHierarchyModal
+ - Added functionality to allow editing of topic and category titles within the EditHierarchyModal
 
 Version 0.4.1
 --

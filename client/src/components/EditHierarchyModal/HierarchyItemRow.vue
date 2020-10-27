@@ -14,13 +14,17 @@
       placeholder="Title"
     />
     <div class="action-buttons" v-if="selected">
-      <i class="las la-check" v-if="changesMade" v-on:click="updateTitle"></i>
+      <i
+        class="las la-check"
+        v-if="changesMade"
+        v-on:click="confirmChanges"
+      ></i>
       <i
         class="las la-edit"
         v-else-if="item.id !== 0"
         v-on:click="selectInput"
       ></i>
-      <i class="las la-trash" v-if="item.id > 0"></i>
+      <i class="las la-trash" v-on:click="deletePrompt" v-if="item.id > 0"></i>
     </div>
   </div>
 </template>
@@ -35,7 +39,7 @@ export default Vue.extend({
     selected: Boolean,
     initiallyEditing: Boolean,
   },
-  data: function () {
+  data: function() {
     return {
       editing: this.initiallyEditing,
       title: this.item.title,
@@ -43,27 +47,35 @@ export default Vue.extend({
     };
   },
   methods: {
-    selectInput: function () {
+    selectInput: function() {
       this.editing = true;
       this.$refs.input.select();
     },
-    onInputBlur: function () {
+    onInputBlur: function() {
       if (this.changesMade) return;
       this.editing = false;
       this.title = this.item.title;
       this.$emit("blurred");
     },
-    updateTitle: function () {
+    confirmChanges: function() {
       this.$emit("titleUpdated", this.item.id, this.title);
       this.editing = false;
       this.changesMade = false;
     },
+    deletePrompt: function() {
+      const confirmDelete = confirm(
+        "Are you sure you want to delete this item? Any content within will be moved to the 'Uncategorised' topic"
+      );
+      if (confirmDelete === true) {
+        this.$emit("onClickDelete", this.item.id);
+      }
+    },
   },
-  mounted: function () {
+  mounted: function() {
     if (this.initiallyEditing === true) this.selectInput();
   },
   watch: {
-    title: function (newVal) {
+    title: function(newVal) {
       this.changesMade = newVal !== this.item.title;
     },
   },

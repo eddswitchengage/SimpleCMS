@@ -25,6 +25,11 @@ namespace SimpleCMS.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => options.AddPolicy("Cors", builder =>
+            {
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            }));
+
             services.AddPersistence(Configuration);
             services.AddApplication();
 
@@ -49,6 +54,8 @@ namespace SimpleCMS.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("Cors");
 
             app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 

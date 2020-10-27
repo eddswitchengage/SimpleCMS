@@ -10,7 +10,7 @@ using SimpleCMS.Persistence;
 namespace SimpleCMS.Persistence.Migrations
 {
     [DbContext(typeof(SimpleDbContext))]
-    [Migration("20201020085313_initial")]
+    [Migration("20201026122648_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,6 +66,9 @@ namespace SimpleCMS.Persistence.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Tags")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(128)")
                         .HasMaxLength(128);
@@ -106,7 +109,7 @@ namespace SimpleCMS.Persistence.Migrations
 
             modelBuilder.Entity("SimpleCMS.Domain.Entities.Content", b =>
                 {
-                    b.HasOne("SimpleCMS.Domain.Entities.Topic", null)
+                    b.HasOne("SimpleCMS.Domain.Entities.Topic", "Topic")
                         .WithMany("Contents")
                         .HasForeignKey("TopicId")
                         .OnDelete(DeleteBehavior.Cascade)

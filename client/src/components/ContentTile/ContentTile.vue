@@ -94,7 +94,7 @@ export default Vue.extend({
 }
 
 .id {
-  flex: 0.5;
+  flex: 0.25;
   color: var(--clr-text-light);
   width: 35px;
 }
@@ -105,11 +105,11 @@ export default Vue.extend({
 }
 
 .hierarchy {
-  flex: 2;
+  flex: 3;
 }
 
 .actions {
-  flex: 0.75;
+  flex: 0.5;
   text-align: right;
 }
 

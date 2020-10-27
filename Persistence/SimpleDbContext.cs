@@ -29,6 +29,7 @@ namespace SimpleCMS.Persistence
                     case EntityState.Added:
                         entry.Entity.CreatedBy = "UserId";
                         entry.Entity.Created = DateTime.Now;
+                        entry.Entity.LastModified = DateTime.Now;
                         break;
                     case EntityState.Modified:
                         entry.Entity.LastModifiedBy = "UserId";

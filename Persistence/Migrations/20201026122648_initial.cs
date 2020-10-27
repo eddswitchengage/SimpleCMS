@@ -55,7 +55,8 @@ namespace SimpleCMS.Persistence.Migrations
                     TopicId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(maxLength: 128, nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    HTMLBody = table.Column<string>(nullable: true)
+                    HTMLBody = table.Column<string>(nullable: true),
+                    Tags = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

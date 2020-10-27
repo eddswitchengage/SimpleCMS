@@ -64,6 +64,9 @@ namespace SimpleCMS.Persistence.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Tags")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(128)")
                         .HasMaxLength(128);
@@ -104,7 +107,7 @@ namespace SimpleCMS.Persistence.Migrations
 
             modelBuilder.Entity("SimpleCMS.Domain.Entities.Content", b =>
                 {
-                    b.HasOne("SimpleCMS.Domain.Entities.Topic", null)
+                    b.HasOne("SimpleCMS.Domain.Entities.Topic", "Topic")
                         .WithMany("Contents")
                         .HasForeignKey("TopicId")
                         .OnDelete(DeleteBehavior.Cascade)

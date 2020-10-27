@@ -8,7 +8,7 @@
       <div class="header noselect">
         <p class="id noselect">Id</p>
         <p class="title noselect">Title</p>
-        <p class="hierarchy noselect">Topic/Category</p>
+        <p class="hierarchy noselect">Topic</p>
         <p class="actions noselect">Actions</p>
       </div>
       <p v-if="getSearchResults.length === 0">No results...</p>
@@ -58,7 +58,7 @@ export default {
 
 .dashboard {
   flex: 1;
-  margin-right:10px;
+  margin-right: 10px;
 }
 
 .header {
@@ -75,16 +75,16 @@ export default {
 }
 
 .header .id {
-  flex: 0.5;
+  flex: 0.25;
 }
 .header .title {
   flex: 4;
 }
 .header .hierarchy {
-  flex: 2;
+  flex: 3;
 }
 .header .actions {
   text-align: right;
-  flex: 0.75;
+  flex: 0.5;
 }
 </style>

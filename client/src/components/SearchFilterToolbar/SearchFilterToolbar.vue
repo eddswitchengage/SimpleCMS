@@ -81,10 +81,11 @@ export default Vue.extend({
       this.expanded = !this.expanded;
     },
 
-    ...mapActions(["setSearchFilters"]),
+    ...mapActions(["setSearchFilters", "performSearch"]),
 
     applyFilters: function() {
       this.setSearchFilters(this.filters);
+      this.performSearch();
     },
     updateCategoryId: function(id: number) {
       this.filters.categoryId = id;
