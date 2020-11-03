@@ -154,12 +154,12 @@ textarea:focus {
 /* ---- TOOLTIP ----- */
 .tooltip .tooltip-text {
   visibility: hidden;
-  background-color: var(--clr-panel);
+  background-color: rgba(0, 0, 0, 1);
   text-align: center;
   border-radius: 2px;
   min-width: 100px;
   padding: 10px;
-  border-top: 1px solid var(--clr-highlight);
+  border-top: 2px solid var(--clr-highlight);
 
   color: var(--clr-text);
 

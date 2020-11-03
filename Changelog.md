@@ -2,6 +2,24 @@
 SimpleCMS Changelog
 =========
 
+Version 0.4.4
+--
+**2020/11/03**
+
+**SPA:**
+
+Added:
+ - Integrated upsert content endpoint to API module
+ - Finished implementing the logic for EditContentModal and plugged it into the API module
+ - Added ChangesMadeTooltip to display when the user has made changes to a local content item
+ - The user is now prompted if they attempt to close an item with unsaved changes
+
+**API:**
+
+Added:
+ - Tags field to upsert content command
+
+
 Version 0.4.3
 --
 **2020/10/27**

@@ -1,4 +1,10 @@
-import { SimpleAPIClient, SearchQuery, Topic, Category } from "./models";
+import {
+  SimpleAPIClient,
+  SearchQuery,
+  Topic,
+  Category,
+  Content,
+} from "./models";
 import Axios from "axios";
 
 const BaseURL = "https://localhost:44348/api/";
@@ -44,8 +50,16 @@ const APIClient: SimpleAPIClient = {
     getById: async (id: number) => {
       console.log("NOT YET IMPLEMENTED hehe");
     },
-    upsert: async (topic: Topic) => {
-      console.log("NOT YET IMPLEMENTED hehe");
+    upsert: async (content: Content) => {
+      const uri = BaseURL + "contents/upsert";
+
+      try {
+        const result = await Axios.post(uri, content);
+        return result.status === 200;
+      } catch (error) {
+        console.log(`An error occurred trying to upsert content: ${error}`);
+        return false;
+      }
     },
     delete: async (id: number) => {
       console.log("NOT YET IMPLEMENTED hehe");
@@ -82,7 +96,7 @@ const APIClient: SimpleAPIClient = {
         return {};
       }
     },
-    upsert: async (topic: Topic) => {
+    upsert: async (category: Category) => {
       console.log("NOT YET IMPLEMENTED hehe");
     },
     delete: async (id: number) => {

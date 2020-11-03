@@ -1,5 +1,9 @@
 <template>
-  <select v-model="selected" class="select-topic-dropdown">
+  <select
+    v-model="selected"
+    class="select-topic-dropdown"
+    v-on:change="$emit('change')"
+  >
     <optgroup
       v-for="category in getCategories"
       :key="category.id"
@@ -42,7 +46,7 @@ export default Vue.extend({
   },
   watch: {
     selected: function(newVal: number) {
-      this.$emit("topicUpdated", newVal);
+      this.$emit("valueChanged", newVal);
     },
   },
 });

@@ -1,14 +1,11 @@
 <template>
-  <div
-    v-if="editModalShown"
-    class="edit-content-modal hide-modal"
-    v-on:click="hideOrCloseModal"
-  >
+  <div v-if="getEditModalShown" class="edit-content-modal hide-modal">
     <div class="modal">
       <div class="header">
         <h2>
           <span v-if="content.id">{{ content.id }}:</span>
           {{ content.title }}
+          <changes-made-toltip :contentId="content.id" />
         </h2>
 
         <div class="action-buttons">
@@ -24,7 +21,11 @@
         </div>
       </div>
 
-      <div class="tabs">
+      <div v-if="loading" class="loading">
+        <activity-indicator />
+      </div>
+
+      <div v-if="!loading" class="tabs">
         <button
           v-on:click="showPreview(false)"
           v-bind:class="{ active: !showingPreview }"
@@ -39,33 +40,40 @@
         </button>
       </div>
 
-      <div class="body">
+      <div v-if="!loading" class="body">
         <div class="edit" v-if="!showingPreview">
-          <select-topic-dropdown :initialTopicId="content.topicId" />
+          <select-topic-dropdown
+            :initialTopicId="content.topicId"
+            v-on:valueChanged="(newVal) => (content.topicId = newVal)"
+            v-on:change="changesMade = true"
+          />
 
           <input
             type="text"
             placeholder="Edit title..."
             v-model="content.title"
+            v-on:change="changesMade = true"
           />
 
           <textarea
             placeholder="Edit description..."
             rows="2"
             v-model="content.description"
+            v-on:change="changesMade = true"
           ></textarea>
 
           <textarea
             placeholder="Edit HTML..."
             rows="10"
             v-model="content.htmlBody"
+            v-on:change="changesMade = true"
           ></textarea>
 
           <input
             type="text"
             placeholder="Edit tags..."
             v-model="content.tags"
-            maxlength="64"
+            v-on:change="changesMade = true"
           />
         </div>
 
@@ -75,9 +83,21 @@
       </div>
 
       <div class="footer">
-        <button>Save changes</button>
-        <label>Last updated: 2020/09/29 12:32</label>
-        <label>Created at: 2020/09/29 12:32</label>
+        <div class="labels">
+          <label>Created: <span>2020/09/29 12:32</span></label>
+          <label>Last updated: <span>2020/09/29 12:32</span></label>
+        </div>
+        <div class="buttons">
+          <button
+            v-bind:class="{
+              disabled: loading || !changesMade,
+            }"
+            :disabled="loading || !changesMade"
+            v-on:click="saveChanges"
+          >
+            Save changes
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -86,9 +106,13 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapGetters, mapActions } from "vuex";
+import { Content } from "@/models";
 import PinContentButton from "@/components/ContentTile/PinContentButton.vue";
 import SelectTopicDropdown from "./SelectTopicDropdown.vue";
 import ContentPreview from "./ContentPreview.vue";
+import ActivityIndicator from "@/components/LoadingOverlay/ActivityIndicator.vue";
+import ChangesMadeToltip from "@/components/ContentTile/ChangesMadeTooltip.vue";
+import APIClient from "@/API";
 
 export default Vue.extend({
   name: "EditContentModal",
@@ -96,32 +120,90 @@ export default Vue.extend({
   data: function() {
     return {
       showingPreview: false,
+      changesMade: false,
+      content: {} as Content,
+      loading: false,
     };
   },
   computed: {
-    ...mapGetters({
-      editModalShown: "getEditModalShown",
-      content: "getEditing",
-      pinnedContainsId: "pinnedContainsId",
-    }),
+    ...mapGetters([
+      "getEditModalShown",
+      "getEditing",
+      "pinnedContainsId",
+      "getOpenById",
+      "editedContainsContentId",
+    ]),
   },
   methods: {
-    ...mapActions(["closeEditModal", "closeContent"]),
+    ...mapActions([
+      "closeEditModal",
+      "closeContent",
+      "addContentIdToEdited",
+      "removeContentIdFromEdited",
+    ]),
+
     hideOrCloseModal: function(event: any) {
       const classes = event.target.className.split(" ");
       if (classes.includes("close-modal") || classes.includes("hide-modal")) {
+        if (!this.changesMade) {
+          this.closeEditModal();
+          if (classes.includes("close-modal")) this.closeContent(this.content);
+        } else if (!classes.includes("close-modal")) {
+          this.closeEditModal();
+        } else {
+          this.closeModalWithChangesPrompt();
+        }
+      }
+    },
+    closeModalWithChangesPrompt: function() {
+      const confirmClose = confirm(
+        "You have unsaved changes, these changes will be lost if you close this content. Are you sure?"
+      );
+      if (confirmClose === true) {
+        this.changesMade = false;
         this.closeEditModal();
-        if (classes.includes("close-modal")) this.closeContent(this.content);
+        this.closeContent(this.content);
       }
     },
     showPreview: function(show: boolean) {
       this.showingPreview = show;
     },
+    saveChanges: function() {
+      this.loading = true;
+      APIClient.content.upsert(this.content).then((success: boolean) => {
+        if (success === true) {
+          this.changesMade = false;
+        } else {
+          alert(
+            "Sorry, something went wrong when trying to update this content"
+          );
+        }
+        this.loading = false;
+      });
+    },
+  },
+  watch: {
+    getEditModalShown: function(newVal) {
+      if (newVal === true) {
+        this.content = this.getEditing;
+        const alreadyOpenContent = this.getOpenById(this.content.id);
+        if (alreadyOpenContent != null) {
+          this.content = alreadyOpenContent;
+        }
+        this.changesMade = this.editedContainsContentId(this.content.id);
+      }
+    },
+    changesMade: function(newVal) {
+      if (newVal === true) this.addContentIdToEdited(this.content.id);
+      else this.removeContentIdFromEdited(this.content.id);
+    },
   },
   components: {
+    ChangesMadeToltip,
     PinContentButton,
     ContentPreview,
     SelectTopicDropdown,
+    ActivityIndicator,
   },
 });
 </script>
@@ -143,10 +225,6 @@ export default Vue.extend({
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.edit-content-modal:hover {
-  cursor: pointer;
-}
-
 .modal {
   display: flex;
   flex-direction: column;
@@ -164,6 +242,13 @@ export default Vue.extend({
 
 .modal:hover {
   cursor: default;
+}
+
+.loading {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Header section */
@@ -286,8 +371,14 @@ textarea:focus {
 .footer {
   flex: 0.25;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer .buttons {
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
 }
 
@@ -311,8 +402,27 @@ textarea:focus {
   opacity: 0.6;
 }
 
+.footer .buttons .disabled {
+  opacity: 0.2;
+}
+
+.footer .buttons .disabled:hover {
+  opacity: 0.2;
+  cursor: default;
+}
+
+.footer .labels {
+  display: flex;
+  justify-content: flex-start;
+}
+
 .footer label {
   font-size: 14px;
   color: var(--clr-text-light);
+  margin-right: 20px;
+}
+
+.footer label span {
+  font-weight: bold;
 }
 </style>

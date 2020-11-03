@@ -34,6 +34,7 @@ export default new Vuex.Store({
     // ---- Content ---- //
     pinned: [] as Content[],
     open: [] as Content[],
+    edited: [] as number[], //List of ids representing contents that have been edited by user
     editing: {} as Content,
 
     searchTerm: "",
@@ -60,6 +61,15 @@ export default new Vuex.Store({
     removeFromPinned(state, content: Content) {
       state.pinned = state.pinned.filter(function(item) {
         return item.id !== content.id;
+      });
+    },
+
+    addToEdited(state, contentId: number) {
+      state.edited.push(contentId);
+    },
+    removeFromEdited(state, contentId: number) {
+      state.edited = state.edited.filter(function(item) {
+        return item !== contentId;
       });
     },
 
@@ -117,9 +127,19 @@ export default new Vuex.Store({
       }
     },
 
+    addContentIdToEdited({ state, commit }, contentId: number) {
+      if (!state.edited.some((item) => item === contentId)) {
+        commit("addToEdited", contentId);
+      }
+    },
+    removeContentIdFromEdited({ state, commit }, contentId: number) {
+      commit("removeFromEdited", contentId);
+    },
+
     openContent({ state, commit }, content: Content) {
       if (!state.open.some((item) => item.id === content.id)) {
-        commit("addToOpen", content);
+        const contentCopy = { ...content };
+        commit("addToOpen", contentCopy);
       }
     },
     closeContent({ commit }, content: Content) {
@@ -185,8 +205,18 @@ export default new Vuex.Store({
       return state.pinned.some((item) => item.id === id);
     },
 
+    getEditedContentIds: (state) => state.edited,
+    editedContainsContentId: (state) => (id: number) => {
+      return state.edited.some((item) => item === id);
+    },
+
     getEditing: (state) => state.editing,
+
     getOpen: (state) => state.open,
+    getOpenById: (state) => (id: number) => {
+      return state.open.find((content: Content) => content.id === id);
+    },
+
     getSearchFilters: (state) => state.searchFilters,
     getSearchResults: (state) => state.searchResults,
 

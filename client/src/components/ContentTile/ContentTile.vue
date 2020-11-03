@@ -5,7 +5,10 @@
     </div>
 
     <div class="title">
-      <p class="noselect">{{ content.title }}</p>
+      <p class="noselect">
+        {{ content.title }}
+        <changes-made-tooltip :contentId="content.id" />
+      </p>
     </div>
 
     <div class="hierarchy">
@@ -31,6 +34,7 @@ import { Content, Topic } from "@/models";
 import { mapGetters, mapActions } from "vuex";
 import PinContentButton from "./PinContentButton.vue";
 import DeleteContentButton from "./DeleteContentButton.vue";
+import ChangesMadeTooltip from "./ChangesMadeTooltip.vue";
 
 export default Vue.extend({
   name: "ContentTile",
@@ -54,6 +58,7 @@ export default Vue.extend({
     },
   },
   components: {
+    ChangesMadeTooltip,
     PinContentButton,
     DeleteContentButton,
   },

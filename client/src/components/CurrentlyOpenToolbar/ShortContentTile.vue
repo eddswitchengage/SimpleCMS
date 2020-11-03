@@ -2,6 +2,7 @@
   <div class="short-content-tile">
     <p class="noselect" v-on:click="openEditModal(content)">
       <span>{{ content.id }}: </span>{{ truncateTitle(content.title) }}
+      <changes-made-tooltip :contentId="content.id" />
     </p>
     <i
       v-on:click="closeContent(content)"
@@ -14,6 +15,7 @@
 import Vue from "vue";
 import { Content } from "@/models";
 import { mapActions } from "vuex";
+import ChangesMadeTooltip from "@/components/ContentTile/ChangesMadeTooltip.vue";
 
 export default Vue.extend({
   name: "ShortContentTile",
@@ -22,10 +24,13 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["openEditModal", "closeContent"]),
-    truncateTitle: function (title: string) {
+    truncateTitle: function(title: string) {
       if (title.length < 24) return title;
       return title.substring(0, 21) + "...";
     },
+  },
+  components: {
+    ChangesMadeTooltip,
   },
 });
 </script>

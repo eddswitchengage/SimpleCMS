@@ -41,6 +41,7 @@ namespace SimpleCMS.Application.Contents.Commands.UpsertContent
             content.Title = request.Title;
             content.Description = request.Description;
             content.HTMLBody = request.HTMLBody;
+            content.Tags = request.Tags;
 
             await _context.SaveChangesAsync(cancellationToken);
 
